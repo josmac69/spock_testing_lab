@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  node1:
+    image: ghcr.io/pgedge/pgedge-postgres:16.11-spock5-standard
+    container_name: spock_lab2_node1
+    environment:
+      POSTGRES_DB: spock_db
+      POSTGRES_USER: spock_user
+      POSTGRES_PASSWORD: spock_password
+    ports:
+      - "5431:5432"
+    command: >
+      postgres
+      -c listen_addresses=*
+      -c shared_preload_libraries=spock
+      -c wal_level=logical
+      -c track_commit_timestamp=on
+      -c spock.save_resolutions=on
+      -c max_replication_slots=10
+      -c max_wal_senders=10
+      -c max_worker_processes=10
+      -c log_replication_commands=on
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spock_user -d spock_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    networks:
+      - spock_net
+
+  node2:
+    image: ghcr.io/pgedge/pgedge-postgres:16.11-spock5-standard
+    container_name: spock_lab2_node2
+    environment:
+      POSTGRES_DB: spock_db
+      POSTGRES_USER: spock_user
+      POSTGRES_PASSWORD: spock_password
+    ports:
+      - "5432:5432"
+    command: >
+      postgres
+      -c listen_addresses=*
+      -c shared_preload_libraries=spock
+      -c wal_level=logical
+      -c track_commit_timestamp=on
+      -c spock.save_resolutions=on
+      -c max_replication_slots=10
+      -c max_wal_senders=10
+      -c max_worker_processes=10
+      -c log_replication_commands=on
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spock_user -d spock_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    networks:
+      - spock_net
+
+  node3:
+    image: ghcr.io/pgedge/pgedge-postgres:16.11-spock5-standard
+    container_name: spock_lab2_node3
+    environment:
+      POSTGRES_DB: spock_db
+      POSTGRES_USER: spock_user
+      POSTGRES_PASSWORD: spock_password
+    ports:
+      - "5433:5432"
+    command: >
+      postgres
+      -c listen_addresses=*
+      -c shared_preload_libraries=spock
+      -c wal_level=logical
+      -c track_commit_timestamp=on
+      -c spock.save_resolutions=on
+      -c max_replication_slots=10
+      -c max_wal_senders=10
+      -c max_worker_processes=10
+      -c log_replication_commands=on
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spock_user -d spock_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    networks:
+      - spock_net
+
+networks:
+  spock_net:
+    name: spock_net_lab2
+    driver: bridge
