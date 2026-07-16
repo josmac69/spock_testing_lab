@@ -31,7 +31,8 @@ echo -e "Node 2 subscription status: ${GREEN}$sub2_status${NC}"
 
 if [ "$sub1_status" != "replicating" ] || [ "$sub2_status" != "replicating" ]; then
     echo -e "${RED}Warning: Subscriptions are not in 'replicating' state. Attempting recovery...${NC}"
-    run_query spock_lab3_node1 "ALTER SYSTEM SET spock.conflict_resolution = 'last_update_wins'; SELECT pg_reload_conf();"
+    run_query spock_lab3_node1 "ALTER SYSTEM SET spock.conflict_resolution = 'last_update_wins';"
+    run_query spock_lab3_node1 "SELECT pg_reload_conf();"
     run_query spock_lab3_node1 "SELECT spock.sub_enable('sub_node1_node2');"
     run_query spock_lab3_node2 "SELECT spock.sub_enable('sub_node2_node1');"
     sleep 3

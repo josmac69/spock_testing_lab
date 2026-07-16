@@ -33,7 +33,7 @@ run_query spock_lab2_node1 "TRUNCATE TABLE devices;"
 
 # Test 1: Insert on Node 1 -> Verify on Node 2 & Node 3
 echo -e "\n${YELLOW}[Test 1] Writing 'device-alpha' on Node 1...${NC}"
-run_query spock_lab2_node1 "INSERT INTO devices (name, status) VALUES ('device-alpha', 'online');"
+run_query spock_lab2_node1 "INSERT INTO devices (id, name, status) VALUES (1, 'device-alpha', 'online');"
 sleep 1.5
 
 for node in spock_lab2_node2 spock_lab2_node3; do
@@ -49,7 +49,7 @@ done
 
 # Test 2: Insert on Node 2 -> Verify on Node 1 & Node 3
 echo -e "\n${YELLOW}[Test 2] Writing 'device-beta' on Node 2...${NC}"
-run_query spock_lab2_node2 "INSERT INTO devices (name, status) VALUES ('device-beta', 'maintenance');"
+run_query spock_lab2_node2 "INSERT INTO devices (id, name, status) VALUES (2, 'device-beta', 'maintenance');"
 sleep 1.5
 
 for node in spock_lab2_node1 spock_lab2_node3; do
@@ -65,7 +65,7 @@ done
 
 # Test 3: Insert on Node 3 -> Verify on Node 1 & Node 2
 echo -e "\n${YELLOW}[Test 3] Writing 'device-gamma' on Node 3...${NC}"
-run_query spock_lab2_node3 "INSERT INTO devices (name, status) VALUES ('device-gamma', 'offline');"
+run_query spock_lab2_node3 "INSERT INTO devices (id, name, status) VALUES (3, 'device-gamma', 'offline');"
 sleep 1.5
 
 for node in spock_lab2_node1 spock_lab2_node2; do

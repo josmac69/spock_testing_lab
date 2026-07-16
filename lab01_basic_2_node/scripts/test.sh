@@ -31,7 +31,7 @@ run_query spock_lab1_node1 "TRUNCATE TABLE customers;"
 
 # Test 1: Insert on Node 1 -> Verify on Node 2
 echo -e "\n${YELLOW}[Test 1] Writing to Node 1 and verifying on Node 2...${NC}"
-run_query spock_lab1_node1 "INSERT INTO customers (name, email) VALUES ('Alice Miller', 'alice@example.com');"
+run_query spock_lab1_node1 "INSERT INTO customers (id, name, email) VALUES (1, 'Alice Miller', 'alice@example.com');"
 
 echo -e "Waiting for replication (1s)..."
 sleep 1
@@ -49,7 +49,7 @@ fi
 
 # Test 2: Insert on Node 2 -> Verify on Node 1
 echo -e "\n${YELLOW}[Test 2] Writing to Node 2 and verifying on Node 1...${NC}"
-run_query spock_lab1_node2 "INSERT INTO customers (name, email) VALUES ('Bob Jones', 'bob@example.com');"
+run_query spock_lab1_node2 "INSERT INTO customers (id, name, email) VALUES (2, 'Bob Jones', 'bob@example.com');"
 
 echo -e "Waiting for replication (1s)..."
 sleep 1
